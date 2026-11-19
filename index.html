@@ -168,10 +168,8 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-  // =========================================================
-  // ⚠️ SUBSTITUA O BLOCO ABAIXO PELO SEU firebaseConfig 
-  // =========================================================
-   const firebaseConfig = {
+  // SEU firebaseConfig AQUI
+  const firebaseConfig = {
     apiKey: "AIzaSyDZbDbH61-iqOBNW-XAhB4JLL61bLywB6E",
     authDomain: "agendamentos-ea0a9.firebaseapp.com",
     projectId: "agendamentos-ea0a9",
@@ -180,7 +178,6 @@
     appId: "1:972934556354:web:2fb7dc3ff8a325ff8d695b",
     measurementId: "G-3K22367V3R"
   };
-  // =========================================================
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
@@ -191,7 +188,7 @@
   let calDataAtual = new Date();
   const $ = id => document.getElementById(id);
 
-  // LISTA COMPLETA DA SUA PLANILHA EMBUTIDA AQUI
+  // LISTA COMPLETA DA SUA PLANILHA
   const listaInicial = `2026-11-05;09:00;manha;IP 319-207/2023 (videoconferência);OIP CARLA;Intimado 1;agendada
 2026-11-05;10:00;manha;IP 319-207/2023;OIP CARLA;Intimado 2;agendada
 2026-11-05;09:00;manha;IP 319-583/2024;OIP KAROL;Intimado 3;agendada
@@ -319,4 +316,13 @@
   }
   window.fecharModal = () => $('modal').style.display = 'none';
 
-  window.det
+  window.detectarTurnoVisual = () => {
+    const hora = parseInt($('input-hora').value.split(':')[0]);
+    if (!isNaN(hora) && hora >= 12 && hora < 18) $('input-turno').value = 'tarde';
+  }
+
+  $('modal').addEventListener('click', e => { if (e.target === $('modal')) fecharModal(); });
+
+  window.mudarMes = (delta) => {
+    calDataAtual.setMonth(calDataAtual.getMonth() + delta);
+    dataF
